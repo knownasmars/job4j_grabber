@@ -10,28 +10,25 @@ import static org.quartz.TriggerBuilder.*;
 import static org.quartz.SimpleScheduleBuilder.*;
 
 public class AlertRabbit {
-    private Properties properties;
-
-    private Properties load(Properties properties) {
+    private Properties load() {
+        Properties cfg = new Properties();
         try (InputStream in = AlertRabbit.class.getClassLoader()
                 .getResourceAsStream(
                 "rabbit.properties")) {
-            Properties cfg = new Properties();
             cfg.load(in);
-            this.properties = cfg;
         } catch (Exception e) {
             throw new IllegalStateException(e);
         }
-        return this.properties;
+        return cfg;
     }
 
     public static void main(String[] args) {
         AlertRabbit ar = new AlertRabbit();
-        Properties properties = new Properties();
-        ar.load(properties);
+        Properties properties = ar.load();
         int timeValue = Integer.parseInt(
-                ar.properties.getProperty(
-                        "rabbit.interval"));
+                properties.getProperty(
+                        "rabbit.interval")
+        );
         try {
             Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
             scheduler.start();
