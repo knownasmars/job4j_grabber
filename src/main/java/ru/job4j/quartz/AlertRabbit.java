@@ -82,11 +82,8 @@ public class AlertRabbit {
         @Override
         public void execute(JobExecutionContext context) {
             System.out.println("Rabbit runs here ...");
-            try (Connection cn =
-                         (Connection) context
-                                 .getJobDetail()
-                                 .getJobDataMap()
-                                 .get("connection")) {
+            try (Connection cn = (Connection) context.getJobDetail()
+                    .getJobDataMap().get("connection")) {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
