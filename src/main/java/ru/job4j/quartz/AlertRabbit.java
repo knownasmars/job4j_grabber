@@ -2,9 +2,9 @@ package ru.job4j.quartz;
 
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
+import java.io.IOException;
 import java.io.InputStream;
 import java.sql.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -14,48 +14,50 @@ import static org.quartz.TriggerBuilder.*;
 import static org.quartz.SimpleScheduleBuilder.*;
 
 public class AlertRabbit {
-    private Properties properties;
-
-    private Connection cn;
-
-    public AlertRabbit() {
-        init();
-    }
-
-    public void init() {
+    private Connection getConnection(Properties properties) {
         try (InputStream in = AlertRabbit.class.getClassLoader()
                 .getResourceAsStream("rabbit.properties")) {
-            properties = new Properties();
             properties.load(in);
-            Class.forName(properties.getProperty("driver-class-name"));
-            cn = DriverManager.getConnection(
+            return DriverManager.getConnection(
                     properties.getProperty("url"),
                     properties.getProperty("username"),
                     properties.getProperty("password")
             );
-        } catch (Exception e) {
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
             e.printStackTrace();
         }
+        return null;
+    }
+
+    private Properties load() {
+        Properties cfg = new Properties();
+        try (InputStream in = AlertRabbit.class.getClassLoader()
+                .getResourceAsStream(
+                        "rabbit.properties")) {
+            cfg.load(in);
+        } catch (Exception e) {
+            throw new IllegalStateException(e);
+        }
+        return cfg;
     }
 
     public static void main(String[] args) {
         AlertRabbit ar = new AlertRabbit();
-        try (Connection cn = ar.cn;
-             PreparedStatement ps = cn.prepareStatement(
-                     "insert into rabbit(created_date) values(?)")) {
-            ps.setTimestamp(1, Timestamp.valueOf(LocalDateTime.now()));
-            ps.execute();
+        Properties properties = ar.load();
+        Connection cn = ar.getConnection(properties);
+        try {
             List<Long> store = new ArrayList<>();
             Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
             scheduler.start();
             JobDataMap data = new JobDataMap();
-            data.put("store", store);
             data.put("connection", cn);
             JobDetail job = newJob(Rabbit.class)
                     .usingJobData(data)
                     .build();
             int timeValue = Integer.parseInt(
-                    ar.properties.getProperty("rabbit.interval"));
+                    properties.getProperty("rabbit.interval"));
             SimpleScheduleBuilder times = simpleSchedule()
                     .withIntervalInSeconds(timeValue)
                     .repeatForever();
@@ -80,8 +82,14 @@ public class AlertRabbit {
         @Override
         public void execute(JobExecutionContext context) {
             System.out.println("Rabbit runs here ...");
-            List<Long> store = (List<Long>) context.getJobDetail().getJobDataMap().get("store");
-            store.add(System.currentTimeMillis());
+            try (Connection cn =
+                         (Connection) context
+                                 .getJobDetail()
+                                 .getJobDataMap()
+                                 .get("connection")) {
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 }
