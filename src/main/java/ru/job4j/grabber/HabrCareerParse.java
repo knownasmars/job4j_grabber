@@ -23,6 +23,7 @@ public class HabrCareerParse {
             Document document = connection.get();
             Elements rows = document.select(".vacancy-card__inner");
             HabrCareerDateTimeParser parser = new HabrCareerDateTimeParser();
+            HabrCareerParse descPeser = new HabrCareerParse();
             rows.forEach(row -> {
                 Element titleElement = row.select(".vacancy-card__title").first();
                 Element linkElement = titleElement.child(0);
@@ -32,9 +33,32 @@ public class HabrCareerParse {
                 String vacancyDate = dateElementChild.attr("datetime");
                 LocalDateTime dateFormatted = parser.parse(vacancyDate);
                 String link = String.format("%s%s", SOURCE_LINK, linkElement.attr("href"));
+
                 System.out.printf("%s %s %s%n", dateFormatted, vacancyName, link);
+                try {
+                    System.out.println(
+                            descPeser.retrieveDescription(link));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             });
             i++;
         }
+    }
+
+    private String retrieveDescription(String link) throws IOException {
+        Connection connection = Jsoup.connect(link);
+        Document document = connection.get();
+        String desc = "";
+        Elements titleRow = document.select(
+                ".section-title__title");
+        String title = titleRow.first().text();
+        Elements descRow = document.select(
+                ".vacancy-description__text");
+        String text = descRow.text();
+        desc = title
+                + System.lineSeparator()
+                + text;
+        return desc;
     }
 }
