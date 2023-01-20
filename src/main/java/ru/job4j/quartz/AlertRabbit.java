@@ -80,9 +80,9 @@ public class AlertRabbit {
                     ps.setTimestamp(1,
                             Timestamp.valueOf(LocalDateTime.now()));
                     ps.execute();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
+        }
     }
 }
