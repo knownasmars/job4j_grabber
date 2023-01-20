@@ -4,9 +4,10 @@ import java.time.*;
 import java.time.format.DateTimeFormatter;
 
 public class HabrCareerDateTimeParser implements DateTimeParser {
+    private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ISO_DATE_TIME;
+
     @Override
     public LocalDateTime parse(String parse) {
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ISO_DATE_TIME;
         LocalDateTime localDateTime = LocalDateTime.parse(parse, dateTimeFormatter);
         return localDateTime;
     }
