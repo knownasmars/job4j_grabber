@@ -43,14 +43,13 @@ public class PsqlStore implements Store {
         psql.save(post);
         System.out.println(psql.getAll());
         System.out.println(psql.findById(3));
-
     }
 
     @Override
     public void save(Post post) {
         try (PreparedStatement ps = cnn.prepareStatement(
                 "insert into post(name, text, link, created) "
-                        + "values(?, ?, ?, ?)")) {
+                        + "values(?, ?, ?, ?) ON CONFLICT ON CONSTRAINT id DO NOTHING")) {
             ps.setString(1, post.getTitle());
             ps.setString(3, post.getLink());
             ps.setString(2, post.getDescription());
