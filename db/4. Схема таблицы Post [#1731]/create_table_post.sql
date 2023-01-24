@@ -2,6 +2,6 @@ create table post(
 	id serial primary key,
 	name text,
 	text text,
-	link text,
-	created timestamp UNIQUE NOT NULL
+	link text UNIQUE NOT NULL,
+	created timestamp
 );
