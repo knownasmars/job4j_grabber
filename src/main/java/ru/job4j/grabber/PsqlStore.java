@@ -39,17 +39,22 @@ public class PsqlStore implements Store {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        PsqlStore psql = new PsqlStore(cfg);
-        psql.save(post);
-        System.out.println(psql.getAll());
-        System.out.println(psql.findById(3));
+        try (PsqlStore psql = new PsqlStore(cfg)) {
+            psql.save(post);
+            System.out.println(psql.getAll());
+            System.out.println(psql.findById(3));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void save(Post post) {
         try (PreparedStatement ps = cnn.prepareStatement(
-                "insert into post(name, text, link, created) "
-                        + "values(?, ?, ?, ?) ON CONFLICT ON CONSTRAINT id DO NOTHING")) {
+                "insert into post(name, text, link, created, id) "
+                        + "values(?, ?, ?, ?, ?) ON CONFLICT (link) DO NOTHING",
+                Statement.RETURN_GENERATED_KEYS)) {
+            ps.setInt(5, ps.getGeneratedKeys().findColumn("id"));
             ps.setString(1, post.getTitle());
             ps.setString(3, post.getLink());
             ps.setString(2, post.getDescription());
