@@ -51,15 +51,19 @@ public class PsqlStore implements Store {
     @Override
     public void save(Post post) {
         try (PreparedStatement ps = cnn.prepareStatement(
-                "insert into post(name, text, link, created, id) "
-                        + "values(?, ?, ?, ?, ?) ON CONFLICT (link) DO NOTHING",
+                "insert into post(name, text, link, created) "
+                        + "values(?, ?, ?, ?) ON CONFLICT (link) DO NOTHING",
                 Statement.RETURN_GENERATED_KEYS)) {
-            ps.setInt(5, ps.getGeneratedKeys().findColumn("id"));
             ps.setString(1, post.getTitle());
             ps.setString(3, post.getLink());
             ps.setString(2, post.getDescription());
             ps.setTimestamp(4, Timestamp.valueOf(post.getCreated()));
             ps.execute();
+            try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    post.setId(generatedKeys.getInt(1));
+                }
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
