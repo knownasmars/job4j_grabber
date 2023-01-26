@@ -57,8 +57,7 @@ public class HabrCareerParse implements Parse {
         Element linkElement = first.child(0);
         String linkToVacancy = String.format("%s%s", SOURCE_LINK, linkElement.attr("href"));
         Post post = new Post(
-                row.select(".vacancy-card__title")
-                        .first().text(),
+                first.text(),
                 linkToVacancy,
                 retrieveDescription(
                         String.format("%s%s", SOURCE_LINK,
