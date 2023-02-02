@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class Emulator {
-    private static String PATH = ".\\src\\main\\java\\ru\\job4j\\cache\\files\\";
+    private static String path = ".\\src\\main\\java\\ru\\job4j\\cache\\files\\";
 
     private static final String CASHING_DIRECTORY = "1";
     private static final String LOAD_CASH = "2";
@@ -15,7 +15,7 @@ public class Emulator {
     private static final String INPUT_FILENAME = "Введите название директории:";
     private static final String DIRECTORY_CASHED = "Директория получена. Загрузите содержимое файла";
 
-    private static String FILENAME;
+    private static String filaName;
 
     public static final String MENU = """
                 ------------------------------------------
@@ -40,9 +40,9 @@ public class Emulator {
                 if (CASHING_DIRECTORY.equals(userChoice)) {
                     System.out.println("Пользователь выбрал: " + CASHING_DIRECTORY);
                     System.out.println(INPUT_FILENAME);
-                    FILENAME = br.readLine();
-                    validate(FILENAME);
-                    dirFileCache = new DirFileCache(FILENAME);
+                    filaName = br.readLine();
+                    validate(filaName);
+                    dirFileCache = new DirFileCache(filaName);
                     System.out.println(DIRECTORY_CASHED);
                 } else if (LOAD_CASH.equals(userChoice)) {
                     System.out.println("Пользователь выбрал: " + LOAD_CASH);
@@ -57,7 +57,7 @@ public class Emulator {
                         }
                         continue;
                     }
-                    dirFileCache.getLoad(PATH);
+                    dirFileCache.getLoad(path);
                 } else if (READ_CASH.equals(userChoice)) {
                     System.out.println("Пользователь выбрал: " + READ_CASH);
                     if (dirFileCache == null) {
@@ -74,7 +74,7 @@ public class Emulator {
                         }
                         continue;
                     }
-                    Object object = dirFileCache.get(PATH);
+                    Object object = dirFileCache.get(path);
                     System.out.println(object);
                 } else {
                     run = false;
@@ -86,7 +86,7 @@ public class Emulator {
     }
 
     private static void validate(String input) {
-        if (!FILENAME.endsWith(".txt")) {
+        if (!filaName.endsWith(".txt")) {
             throw new IllegalArgumentException(
                     "Path has to be ended with \".txt\""
             );
