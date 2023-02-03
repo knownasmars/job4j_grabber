@@ -4,6 +4,7 @@ import ru.job4j.cache.DirFileCache;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Optional;
 
 public class Emulator {
     private static String path = ".\\src\\main\\java\\ru\\job4j\\cache\\files\\";
@@ -15,7 +16,7 @@ public class Emulator {
     private static final String INPUT_FILENAME = "Введите название директории:";
     private static final String DIRECTORY_CASHED = "Директория получена. Загрузите содержимое файла";
 
-    private static String filaName;
+    private static String fileName;
 
     public static final String MENU = """
                 ------------------------------------------
@@ -40,9 +41,9 @@ public class Emulator {
                 if (CASHING_DIRECTORY.equals(userChoice)) {
                     System.out.println("Пользователь выбрал: " + CASHING_DIRECTORY);
                     System.out.println(INPUT_FILENAME);
-                    filaName = br.readLine();
-                    validate(filaName);
-                    dirFileCache = new DirFileCache(filaName);
+                    fileName = br.readLine();
+                    validate();
+                    dirFileCache = new DirFileCache(fileName);
                     System.out.println(DIRECTORY_CASHED);
                 } else if (LOAD_CASH.equals(userChoice)) {
                     System.out.println("Пользователь выбрал: " + LOAD_CASH);
@@ -86,8 +87,8 @@ public class Emulator {
         }
     }
 
-    private static void validate(String input) {
-        if (!filaName.endsWith(".txt")) {
+    private static void validate() {
+        if (!fileName.endsWith(".txt")) {
             throw new IllegalArgumentException(
                     "Path has to be ended with \".txt\""
             );
