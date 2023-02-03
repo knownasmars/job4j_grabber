@@ -19,7 +19,7 @@ public class PostStore {
         posts.clear();
     }
 
-    public static Collection<Post> getPosts() {
+    public Collection<Post> getPosts() {
         return new PostStore().posts.values();
     }
 }

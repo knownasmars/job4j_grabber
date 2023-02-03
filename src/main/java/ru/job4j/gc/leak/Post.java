@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Post {
 
-    private Integer id;
+    private int id;
 
     private String text;
 
@@ -27,11 +27,6 @@ public class Post {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    @Override
-    protected void finalize() throws Throwable {
-        super.finalize();
     }
 
     public String getText() {
