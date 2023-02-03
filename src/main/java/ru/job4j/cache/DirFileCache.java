@@ -1,7 +1,6 @@
 package ru.job4j.cache;
 
 import java.io.*;
-import java.lang.ref.SoftReference;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -12,8 +11,8 @@ public class DirFileCache extends AbstractCache<String, String> {
         this.cachingDir = cachingDir;
     }
 
-    public void getLoad(String path) {
-        load(path);
+    public String getLoad(String path) {
+        return load(path);
     }
 
     @Override
@@ -26,8 +25,6 @@ public class DirFileCache extends AbstractCache<String, String> {
             StringBuilder sb = new StringBuilder();
             bis.lines().forEach(sb::append);
             rsl = sb.toString();
-            SoftReference<String> soft = new SoftReference<>(rsl);
-            cache.put(key, soft);
         } catch (IOException e) {
             e.printStackTrace();
         }

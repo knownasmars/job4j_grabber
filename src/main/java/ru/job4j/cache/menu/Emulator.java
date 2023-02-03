@@ -57,7 +57,8 @@ public class Emulator {
                         }
                         continue;
                     }
-                    dirFileCache.getLoad(path);
+                    String rsl = dirFileCache.getLoad(path);
+                    dirFileCache.put(path, rsl);
                 } else if (READ_CASH.equals(userChoice)) {
                     System.out.println("Пользователь выбрал: " + READ_CASH);
                     if (dirFileCache == null) {
