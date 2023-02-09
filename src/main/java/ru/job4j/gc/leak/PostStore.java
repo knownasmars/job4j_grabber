@@ -4,7 +4,6 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class PostStore {
-
     private Map<Integer, Post> posts = new HashMap<>();
 
     private AtomicInteger atomicInteger = new AtomicInteger(1);

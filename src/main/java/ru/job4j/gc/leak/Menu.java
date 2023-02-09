@@ -61,8 +61,7 @@ public class Menu {
                 postStore.getPosts()
                         .forEach(x ->
                                 System.out.println(x
-                                        .getId()
-                                        .toString() + " был удален"
+                                        .getId() + " был удален"
                                 )
                         );
                 postStore.removeAll();
