@@ -10,21 +10,19 @@ public class Emulator {
     private static String path = ".\\src\\main\\java\\ru\\job4j\\cache\\files\\";
 
     private static final String CASHING_DIRECTORY = "1";
-    private static final String LOAD_CASH = "2";
-    private static final String READ_CASH = "3";
-
+    private static final String READ_CASH = "2";
     private static final String INPUT_FILENAME = "Введите название директории:";
     private static final String DIRECTORY_CASHED = "Директория получена. Загрузите содержимое файла";
+    private static final String USER_SELECTED = "Пользователь выбрал: ";
+    private static final String ENTER_OR_EXIT = "Для продолжения введите \"0\", для выхода - любой другой ответ.";
 
     private static String fileName;
-
     public static final String MENU = """
                 ------------------------------------------
                   >>>>>>>> Выберите пункт меню <<<<<<<<<
                 ------------------------------------------
                 1 - Ввести название кэшируемого файла
-                2 - Загрузить содержимое файла в кэш
-                3 - Получить содержимое файла из кэша
+                2 - Получить содержимое файла из кэша
                 Чтобы выйти введите любой другой текст
                 ------------------------------------------
             """;
@@ -39,18 +37,18 @@ public class Emulator {
                 System.out.println(MENU);
                 userChoice = br.readLine();
                 if (CASHING_DIRECTORY.equals(userChoice)) {
-                    System.out.println("Пользователь выбрал: " + CASHING_DIRECTORY);
+                    System.out.println(USER_SELECTED + CASHING_DIRECTORY);
                     System.out.println(INPUT_FILENAME);
                     fileName = br.readLine();
                     validate();
                     dirFileCache = new DirFileCache(fileName);
                     System.out.println(DIRECTORY_CASHED);
-                } else if (LOAD_CASH.equals(userChoice)) {
-                    System.out.println("Пользователь выбрал: " + LOAD_CASH);
+                } else if (READ_CASH.equals(userChoice)) {
+                    System.out.println(USER_SELECTED + READ_CASH);
                     if (dirFileCache == null) {
                         System.out.println(
                                 "Сначала введите название файла (пункт 1)." + System.lineSeparator()
-                                        + "Для продолжения введите \"0\", для выхода - любой другой ответ."
+                                        + ENTER_OR_EXIT
                         );
                         answer = br.readLine();
                         if (!"0".equals(answer)) {
@@ -58,26 +56,8 @@ public class Emulator {
                         }
                         continue;
                     }
-                    String rsl = dirFileCache.getLoad(path);
-                    dirFileCache.put(path, rsl);
-                } else if (READ_CASH.equals(userChoice)) {
-                    System.out.println("Пользователь выбрал: " + READ_CASH);
-                    if (dirFileCache == null) {
-                        System.out.println(
-                                "Кэш пуст.Сначала необходимо загрузить кэш." + System.lineSeparator()
-                                + "Для этого: " + System.lineSeparator()
-                                + "1. Выберите пункт 1 и введите название файла." + System.lineSeparator()
-                                + "2. Выберите пункт 2 и загрузите кэш." + System.lineSeparator()
-                                + "Для продолжения введите \"0\", для выхода - любой другой ответ."
-                        );
-                        answer = br.readLine();
-                        if (!"0".equals(answer)) {
-                            break;
-                        }
-                        continue;
-                    }
-                    Object object = dirFileCache.get(path);
-                    System.out.println(object);
+                    Object obj = dirFileCache.get(path);
+                    System.out.println(obj);
                 } else {
                     run = false;
                 }
