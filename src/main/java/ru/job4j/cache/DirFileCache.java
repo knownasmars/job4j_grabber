@@ -16,7 +16,6 @@ public class DirFileCache extends AbstractCache<String, String> {
         String rsl = null;
         try {
             rsl = Files.readString(Path.of(cachingDir, key));
-            System.out.println(rsl);
         } catch (IOException e) {
             e.printStackTrace();
         }
