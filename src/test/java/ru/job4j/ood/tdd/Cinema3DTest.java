@@ -2,6 +2,8 @@ package ru.job4j.ood.tdd;
 
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+
+import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -50,8 +52,8 @@ public class Cinema3DTest {
     public void whenBuyTicketOnInvalidDateThenGetException() {
         Account account = new AccountCinema();
         Cinema cinema = new Cinema3D();
-        Date d = new Date();
         Calendar date = Calendar.getInstance();
+        date.set(9999, 99, 99);
         assertThatThrownBy(() -> cinema.buy(account, 1, 1, date)).
                 isInstanceOf(IllegalArgumentException.class);
     }
