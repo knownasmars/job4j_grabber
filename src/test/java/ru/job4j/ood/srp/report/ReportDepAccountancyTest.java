@@ -19,7 +19,7 @@ class ReportDepAccountancyTest {
         Calendar now = Calendar.getInstance();
         Employee worker = new Employee("Ivan", now, now, 100);
         store.add(worker);
-        double RUBtoUSDrate = 0.013;
+        double conversionRate = 0.013;
         InMemoryCurrencyConverter currencyConverter = new InMemoryCurrencyConverter();
         DateTimeParser<Calendar> parser = new ReportDateTimeParser();
         ReportDepAccountancy report =
@@ -31,7 +31,7 @@ class ReportDepAccountancyTest {
                 .append(worker.getName()).append(" ")
                 .append(parser.parse(worker.getHired())).append(" ")
                 .append(parser.parse(worker.getFired())).append(" ")
-                .append(worker.getSalary() * RUBtoUSDrate)
+                .append(worker.getSalary() * conversionRate)
                 .append(System.lineSeparator());
         assertThat(report.generate(emp -> true)).isEqualTo(expected.toString());
     }

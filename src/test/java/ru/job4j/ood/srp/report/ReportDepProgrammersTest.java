@@ -19,7 +19,7 @@ class ReportDepProgrammersTest {
         Path source = Paths.get("report.csv");
         MemStore store = new MemStore();
         Calendar now = Calendar.getInstance();
-        Employee worker = new Employee("Ivan", now, now,100.0);
+        Employee worker = new Employee("Ivan", now, now, 100.0);
         store.add(worker);
         ReportDateTimeParser reportDateTimeParser = new ReportDateTimeParser();
         ReportDepProgrammers rdp = new ReportDepProgrammers(store, reportDateTimeParser);
