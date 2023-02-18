@@ -20,6 +20,14 @@ class MaxMinTest {
     }
 
     @Test
+    void whenListIsEmpty() {
+        List<Integer> field = new ArrayList<>();
+        MaxMin mm = new MaxMin();
+        Comparator<Integer> comparator = Comparator.naturalOrder();
+        assertThat(mm.max(field, comparator)).isNull();
+    }
+
+    @Test
     void whenFindMax() {
         MaxMin mm = new MaxMin();
         Comparator<Integer> comparator = Comparator.naturalOrder();

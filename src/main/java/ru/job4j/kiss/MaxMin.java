@@ -6,6 +6,9 @@ import java.util.function.BiPredicate;
 
 public class MaxMin {
     public static <T> T finder(List<T> list, BiPredicate<T, T> predicate) {
+        if (list.isEmpty()) {
+            return null;
+        }
         T rsl = list.get(0);
         for (T value : list) {
             if (predicate.test(value, rsl)) {
