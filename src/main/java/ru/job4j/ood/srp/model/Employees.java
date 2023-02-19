@@ -9,7 +9,8 @@ public class Employees {
     @XmlElement(name = "employee")
     private List<Employee> employees;
 
-    public Employees() {}
+    public Employees() {
+    }
 
     public Employees(List<Employee> employees) {
         this.employees = employees;
