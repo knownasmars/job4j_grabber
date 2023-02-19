@@ -13,8 +13,8 @@ import java.util.function.Predicate;
 
 public class ReportDepAccountancy implements Report {
     private final Store store;
-    private final DateTimeParser<Calendar> dateTimeParser;
     private final CurrencyConverter currencyConverter;
+    private final DateTimeParser<Calendar> dateTimeParser;
 
     public ReportDepAccountancy(Store store, DateTimeParser<Calendar> dateTimeParser, CurrencyConverter currencyConverter) {
         this.store = store;
