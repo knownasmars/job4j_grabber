@@ -18,8 +18,8 @@ class Animal {
         System.out.println("Rooooar, i'm animal!");
     }
 
-    public float fight() {
-        return health = (float) (health * 0.5);
+    public void fight() {
+        health = (float) (health * 0.5);
     }
 
     public float getHealth() {
@@ -63,9 +63,9 @@ class Panther extends Animal {
         return health;
     }
 
-    public float fight() {
+    public void fight() {
         System.out.println("I fought!");
-        return health = (float) (health * 0.5);
+        health = (float) (health * 0.5);
     }
 }
 
