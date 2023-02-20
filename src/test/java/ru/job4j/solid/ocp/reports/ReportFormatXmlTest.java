@@ -4,27 +4,23 @@ import org.junit.jupiter.api.Test;
 import ru.job4j.ood.srp.formatter.DateTimeParser;
 import ru.job4j.ood.srp.formatter.XmlReportDateTimeParser;
 import ru.job4j.ood.srp.model.Employee;
-import ru.job4j.ood.srp.model.Employees;
 import ru.job4j.ood.srp.report.Report;
 import ru.job4j.ood.srp.store.MemStore;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
 import java.util.Calendar;
 
 import static org.assertj.core.api.Assertions.*;
 
 class ReportFormatXmlTest {
     @Test
-    void whenGenerateXmlReport() throws JAXBException {
+    void whenGenerateXmlReport() {
         MemStore store = new MemStore();
         Calendar now = Calendar.getInstance();
         Employee worker = new Employee("Ivan", now, now, 100.0);
         DateTimeParser<Calendar> parser = new XmlReportDateTimeParser();
         store.add(worker);
         String date = parser.parse(now);
-        JAXBContext context = JAXBContext.newInstance(Employees.class);
-        Report engine = new ReportFormatXml(store, context);
+        Report engine = new ReportFormatXml(store);
         String exp = String.format("""
                 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
                 <employees>

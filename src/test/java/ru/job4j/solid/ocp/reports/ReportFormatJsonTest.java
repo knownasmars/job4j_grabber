@@ -1,6 +1,5 @@
 package ru.job4j.solid.ocp.reports;
 
-import com.google.gson.GsonBuilder;
 import org.junit.jupiter.api.Test;
 import ru.job4j.ood.srp.formatter.DateTimeParser;
 import ru.job4j.ood.srp.formatter.ReportDateTimeParser;
@@ -20,7 +19,7 @@ class ReportFormatJsonTest {
         Employee worker = new Employee("Ivan", now, now, 100);
         DateTimeParser<Calendar> parser = new ReportDateTimeParser();
         store.add(worker);
-        Report engine = new ReportFormatJson(store, parser, new GsonBuilder().create());
+        Report engine = new ReportFormatJson(store, parser);
         String delimiter = ",";
         StringBuilder expected = new StringBuilder()
                 .append("[").append("{")
