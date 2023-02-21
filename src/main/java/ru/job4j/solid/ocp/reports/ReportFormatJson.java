@@ -13,15 +13,16 @@ import java.util.function.Predicate;
 public class ReportFormatJson implements Report {
     private final Store store;
     private final DateTimeParser<Calendar> dateTimeParser;
+    private final Gson gson;
 
     public ReportFormatJson(Store store, DateTimeParser<Calendar> dateTimeParser) {
         this.store = store;
         this.dateTimeParser = dateTimeParser;
+        gson = new GsonBuilder().create();
     }
 
     @Override
     public String generate(Predicate<Employee> filter) {
-        Gson gson = new GsonBuilder().create();
         var employees = store.findBy(filter);
         return gson.toJson(employees);
     }

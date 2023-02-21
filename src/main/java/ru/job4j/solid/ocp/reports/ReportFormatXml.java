@@ -14,9 +14,15 @@ import java.util.function.Predicate;
 
 public class ReportFormatXml implements Report {
     private final Store store;
+    private JAXBContext context;
 
     public ReportFormatXml(Store store) {
         this.store = store;
+        try {
+            context = JAXBContext.newInstance(Employees.class);
+        } catch (JAXBException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -24,7 +30,6 @@ public class ReportFormatXml implements Report {
         var employees = store.findBy(filter);
         String xml = "";
         try (StringWriter writer = new StringWriter()) {
-            JAXBContext context = JAXBContext.newInstance(Employees.class);
             Marshaller marshaller = context.createMarshaller();
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
             marshaller.marshal(new Employees(employees), writer);
