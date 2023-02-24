@@ -5,5 +5,5 @@ import java.util.List;
 public interface Store {
     List<Food> getStored();
 
-    void store(Food food);
+    boolean store(Food food);
 }

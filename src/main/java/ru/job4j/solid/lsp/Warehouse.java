@@ -11,8 +11,8 @@ public class Warehouse extends AbstractStore {
     }
 
     @Override
-    public void store(Food food) {
-        stored.add(food);
+    public boolean store(Food food) {
         System.out.println("Товар хранится на складе");
+        return stored.add(food);
     }
 }
