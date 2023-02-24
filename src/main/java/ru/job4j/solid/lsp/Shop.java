@@ -12,7 +12,7 @@ public class Shop extends AbstractStore {
 
     @Override
     public boolean store(Food food) {
-        System.out.println("Товар выставлен на прилавок!");
+        System.out.println("Товар выставлен на прилавок");
         return stored.add(food);
     }
 }
