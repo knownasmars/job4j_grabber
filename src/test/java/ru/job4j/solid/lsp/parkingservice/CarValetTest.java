@@ -20,7 +20,8 @@ class CarValetTest {
         Parking parking =  new CarParking();
         CarValet carValet = new CarValet();
         carValet.setParking(parking);
-        Stream.of(new Car(1,"1", true),
+        Stream.of(
+                new Car(1,"1", true),
                 new Car(1, "2", true),
                 new Car(1, "3", true),
                 new Car(1, "4", true),
@@ -41,7 +42,8 @@ class CarValetTest {
         Parking parking =  new CarParking();
         CarValet carValet = new CarValet();
         carValet.setParking(parking);
-        Stream.of(new Car(1,"1", true),
+        Stream.of(
+                new Car(1,"1", true),
                 new Car(1, "2", true),
                 new Car(1, "3", true),
                 new Car(1, "4", true),
@@ -98,7 +100,8 @@ class CarValetTest {
         Parking parking =  new CarParking();
         CarValet carValet = new CarValet();
         carValet.setParking(parking);
-        Stream.of(new Car(1,"1", true),
+        Stream.of(
+                new Car(1,"1", true),
                 new Car(1, "2", true),
                 new Car(1, "3", true),
                 new Car(1, "4", true),

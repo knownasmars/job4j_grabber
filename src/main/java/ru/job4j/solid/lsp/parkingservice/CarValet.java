@@ -10,6 +10,7 @@ public class CarValet {
 
     public CarValet() {
     }
+
     public CarValet(Vehicle vehicle, Parking parking) {
         this.vehicle = vehicle;
         this.parking = parking;
